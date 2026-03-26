@@ -1,0 +1,21 @@
+1. Do you think this current system provides adequate accountability around short-term
+rentals in San Francisco? In your response, describe why you believe the system is
+adequate or inadequate. If you believe the system is inadequate, discuss a possible
+change in actions required to improve accountability in this system. You may refer to the
+SWE Code of Ethics as you think through your response.
+    a. 
+
+2. As discussed in the introduction, the legality of web scraping is still uncertain in the US.
+Skim through the Legal Issues section of Web Scraping in the US on Wikipedia and this
+article about the legal issues with the Computer Fraud and Abuse Act, and describe at
+least one factor you believe is important to consider when discussing the legality of web
+scraping and why.
+    a. 
+
+3. Scraping public data does not always lead to positive results for society. For example,
+look to Facebook–Cambridge Analytica data scandal - Wikipedia or Clearview AI -
+Wikipedia. Many argue that using someone’s personal data without their consent (even if
+publicly provided) is unethical. Web scraping requires thoughtful intervention. Develop at
+least two guidelines you think are important to consider when deciding whether to do
+web scraping.
+    a. 
