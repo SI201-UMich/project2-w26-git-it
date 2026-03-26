@@ -36,14 +36,34 @@ def load_listing_results(html_path) -> list[tuple]:
     Returns:
         list[tuple]: A list of tuples containing (listing_title, listing_id)
     """
-    # TODO: Implement checkout logic following the instructions
-    # ==============================
-    # YOUR CODE STARTS HERE
-    # ==============================
-    pass
-    # ==============================
-    # YOUR CODE ENDS HERE
-    # ==============================
+    listings = []
+
+    with open(html_path, "r", encoding="utf-8-sig") as f:
+        soup = BeautifulSoup(f, "html.parser")
+
+    title_nodes = soup.select('[data-testid="listing-card-title"]')
+
+    for node in title_nodes:
+        title_text = node.get_text(strip=True)
+
+        listing_id = None
+        element_id = node.get("id", "")
+        if element_id.startswith("title_"):
+            listing_id = element_id.split("title_", 1)[1]
+
+        if not listing_id:
+            parent = node
+            while parent is not None:
+                if parent.name == "a" and "/rooms/" in parent.get("href", ""):
+                    href = parent.get("href", "")
+                    listing_id = href.split("/rooms/", 1)[1].split("?", 1)[0]
+                    break
+                parent = parent.parent
+
+        if listing_id:
+            listings.append((title_text, listing_id))
+
+    return listings
 
 
 def get_listing_details(listing_id) -> dict:
