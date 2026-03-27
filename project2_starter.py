@@ -114,6 +114,42 @@ def get_listing_details(listing_id) -> dict:
         host_type = "regular"
     
     host_name = None
+    host_elm = soup.find(string=re.gete.compile("Hosted by|Co-hosted by"))
+    if host_elm:
+        host_name = host_elm.get_text(strip=True)
+        host_name = re.sub(r"Hosted by\s*|Co-hosted by\s*", "", host_name)
+    if host_name is None:
+        host_name = ""
+
+    subtitle = ""
+    soubtitle_elm = soup.find(string=re.compile(r"Private|Shared|Entire"))
+    if soubtitle_elm:
+        subtitle = soubtitle_elm.get_text(strip=True)
+    if "Private" in subtitle:
+        room_type = "Private Room"
+    elif "Shared" in subtitle:
+        room_type = "Shared Room"
+    else:
+        room_type = "Entire Room"
+
+    location_rating = 0.0
+    rating_elm = soup.find(string=re.compile(r"Location"))
+    if rating_elm:
+        parent = rating_elm.find_parent()
+        if parent:
+            rating_text = parent.get_text(strip=True)
+            match = re.search(r"Location\s*([0-5]\.?[0-9]?)", rating_text)
+            if match:
+                location_rating = float(match.group(1)) 
+    return {
+        listing_id: {
+            "policy_number": policy_number,
+            "host_type": host_type,
+            "host_name": host_name,
+            "room_type": room_type,
+            "location_rating": location_rating      
+        }
+    }
     # ==============================
     # YOUR CODE ENDS HERE
     # ==============================
