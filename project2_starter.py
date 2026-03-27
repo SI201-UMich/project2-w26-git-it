@@ -1,13 +1,13 @@
-# SI 201 HW4 (Library Checkout System)
+# SI 201 Project 2 (Airbnb “Scraping”) 
 # Your name(s): Lucy Pike & Elli Hoke
 # Your student id(s): 03123721 (Lucy) & 46546511 (Elli)
 # Your email(s): lucypike@umich.edu & ehoke@umich.edu
-# Who or what you worked with on this homework (including generative AI like ChatGPT):
+# Who or what you worked with on this homework (including generative AI like ChatGPT): Claude 
 # If you worked with generative AI also add a statement for how you used it.
-# e.g.:
-# Asked ChatGPT for hints on debugging and for suggestions on overall code structure
+# We used AI to help understand the basic structures for each of the functions to make sure we weren't mising anything.
 # Did your use of GenAI on this assignment align with your goals and guidelines in your Gen AI contract? If not, why?
-#
+# Yes, this aligned with our goals because we used AI to help us understand the code further and help us when we were stuck, which fit both of our contracts.
+
 # --- ARGUMENTS & EXPECTED RETURN VALUES PROVIDED --- #
 # --- SEE INSTRUCTIONS FOR FULL DETAILS ON METHOD IMPLEMENTATION --- #
 
@@ -17,7 +17,6 @@ import os
 import csv
 import unittest
 import requests  # kept for extra credit parity
-
 
 # IMPORTANT NOTE:
 """
@@ -370,7 +369,6 @@ class TestCases(unittest.TestCase):
 def main():
     detailed_data = create_listing_database(os.path.join("html_files", "search_results.html"))
     output_csv(detailed_data, "airbnb_dataset.csv")
-
 
 if __name__ == "__main__":
     main()
