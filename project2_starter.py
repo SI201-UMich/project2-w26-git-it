@@ -270,13 +270,18 @@ class TestCases(unittest.TestCase):
         )
 
     def test_output_csv(self):
-        out_path = os.path.join(self.base_dir, "test.csv")
+        out_path = os.path.join(self.base_dir, "test.csv")                          # defines the path for the output CSV file to be created in the same directory as the test file
 
-        # TODO: Call output_csv() to write the detailed_data to a CSV file.
-        # TODO: Read the CSV back in and store rows in a list.
-        # TODO: Check that the first data row matches ["Guesthouse in San Francisco", "49591060", "STR-0000253", "Superhost", "Ingrid", "Entire Room", "5.0"].
+        output_csv(self.detailed_data, out_path)                                    # calls the output_csv function with the detailed_data list and the defined output path to create a CSV file containing the listing information sorted by location rating 
 
-        os.remove(out_path)
+        with open(out_path, "r", encoding="utf-8-sig", newline="") as csvfile:      # opens the created CSV file in read mode with UTF-8 encoding and proper newline handling to read its contents 
+            reader = csv.reader(csvfile)                                            # creates a CSV reader object to read the contents of the CSV file
+            rows = list(reader)                                                     # converts the reader object into a list of rows, where each row is a list of values corresponding to the columns in the CSV file
+
+        self.assertGreater(len(rows), 1)                                            # checks that there is more than just the header row in the CSV file
+        self.assertEqual(rows[1], ["Guesthouse in San Francisco", "49591060", "STR-0000253", "Superhost", "Ingrid", "Entire Room", "5.0"])  # checks that the first data row in the CSV file matches the expected values for the listing with the highest location rating
+
+        os.remove(out_path)                                                         # removes the created CSV file after the test is complete to clean up the directory
 
     def test_avg_location_rating_by_room_type(self):
         # TODO: Call avg_location_rating_by_room_type() and save the output.
