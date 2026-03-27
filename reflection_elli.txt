@@ -3,7 +3,18 @@ rentals in San Francisco? In your response, describe why you believe the system 
 adequate or inadequate. If you believe the system is inadequate, discuss a possible
 change in actions required to improve accountability in this system. You may refer to the
 SWE Code of Ethics as you think through your response.
-    a. 
+
+    a. While the current system for regualting short term rentals in San Fracisco has some accountability,
+    such as requiring hosts to get a policy numbers and differentitating between superhost and ragular hosts, it
+    is not enough. Many listing either have a pending or exempt policy numbers, which makes it hard to check compliance 
+    and enforce safety, tax, and zoning regualtions. The lack in transparecny allows for violations to go unnoticed.
+    This has the potential of undermining the commnuity standard and fair hosuing rules. To improve accountability,
+    the city needs to enforce a stricter policy registration, inclduing automatic verfitcations before a listing 
+    goes live. Another step would be track the listing activity more effectivey to make sure to complines. This
+    would align more with the SWE Code of Ethics principle that software systems shoudl promote public good and prevent 
+    potential harm.
+    
+
 
 2. As discussed in the introduction, the legality of web scraping is still uncertain in the US.
 Skim through the Legal Issues section of Web Scraping in the US on Wikipedia and this
@@ -11,6 +22,14 @@ article about the legal issues with the Computer Fraud and Abuse Act, and descri
 least one factor you believe is important to consider when discussing the legality of web
 scraping and why.
     a. 
+    
+    One factor that should be thought of when look a tthe legality of web scraping is wether 
+    accessing a websity without permission fall under "unauthorized access" under the CFAA. 
+    While public data may seem to free to access, the CFAA has been interpreted in a way
+    that make scraping a violation if it goes against the site's terms of service. This means,
+    with legal ambiguity,  that even scraping publicly available data could lead to result of 
+    liability. For this reason, devleoper need to be careful when evalutating both website's rules
+    and the potential risks before collecting any data.
 
 3. Scraping public data does not always lead to positive results for society. For example,
 look to Facebook–Cambridge Analytica data scandal - Wikipedia or Clearview AI -
@@ -19,3 +38,11 @@ publicly provided) is unethical. Web scraping requires thoughtful intervention. 
 least two guidelines you think are important to consider when deciding whether to do
 web scraping.
     a. 
+
+    1. Respect user consent and context. Even when data is public, it should not be used in 
+    manner the user did not expect. Large scale scraping and repurisng and violate a user privacy.
+    Such as in the scanal with with Facebook.
+    2. Evalutating the potential harms before scraping - Before scraping, developers need to consider
+    how the data could be used and whether it could cause harm to the user by misue or possible surveillance.
+    Similar concerns where raised around Clearview AI. If the potential risks outweigh the actuall benefits then
+    scraping should be avoided. 
