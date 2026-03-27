@@ -3,14 +3,27 @@ rentals in San Francisco? In your response, describe why you believe the system 
 adequate or inadequate. If you believe the system is inadequate, discuss a possible
 change in actions required to improve accountability in this system. You may refer to the
 SWE Code of Ethics as you think through your response.
-    a. 
+    a. Accoundability in housing is incredibly important as there is an extreme housing shortage in the US.
+    Requiring hosts to register, limiting unhosted rentals, and verify registration numbers is just a small step 
+    to further ensure rentals are legal and safe for people to use. Overall, I believe the system is inadequate
+    due to the lack of enforcement. The idea of short-term rentals is still a new concept to a large population 
+    of people so enforcing laws and keeping people responsible is necessary, something the system is heading 
+    towards, but has not reached it completely. Personally, I would want automatic tracking of rentals and 
+    transparency between the city and the rental. I hope alongside this there would be some consequence to 
+    people who do not respect these rules. 
 
 2. As discussed in the introduction, the legality of web scraping is still uncertain in the US.
 Skim through the Legal Issues section of Web Scraping in the US on Wikipedia and this
 article about the legal issues with the Computer Fraud and Abuse Act, and describe at
 least one factor you believe is important to consider when discussing the legality of web
 scraping and why.
-    a. 
+    a. The legality of web scraping is a debated subject because of it's relative newness into technology as
+    an innovation and therefore has several debates as to ethics and legality behind it. I believe that not 
+    everyone should be able to web scrape some specific info, whether it's confidential or private, so people's 
+    right to privacy is still upheld. Whether that's paywalls or blocks or something similar, if you don't 
+    have access to it in the first place, you should not be allowed to web scrape it due to the reason it is 
+    not giving you access. This is an ethical debate as the choice if something is publically accessible or not
+    can be disputed, but overall respecting people's privacy should be the number one priority. 
 
 3. Scraping public data does not always lead to positive results for society. For example,
 look to Facebook–Cambridge Analytica data scandal - Wikipedia or Clearview AI -
@@ -18,4 +31,14 @@ Wikipedia. Many argue that using someone’s personal data without their consent
 publicly provided) is unethical. Web scraping requires thoughtful intervention. Develop at
 least two guidelines you think are important to consider when deciding whether to do
 web scraping.
-    a. 
+    a. This question reminds me of public profiles and how jobs/universities can look into someone's 
+    social media and deny them acceptance/the job if the person's social media is not viewed as respectful
+    (whatever the reason may be). So, despite one's information being technically "public," I don't think
+    this allows other's to use this data without their consent. Some guidelines I would propose include:
+    1. Using their infomation for a reason different than the reason the data is public. What I mean is if 
+    someone posts photos for their friends to see but that data is used for another purpose other than liking it,
+    or commenting, or whatever the social media allows, the purpose has been altered and therefore the person
+    did not give their consent for that data to be used in a different way than they intended. 
+    2. There should be some form of communication with the person whose data is being used. Whether this
+    is a message to the person directly or something equivalent, the person should be informed of how their 
+    data is being used and if they don't like how it's used, a way to take their data out of the innapproriate use. 
