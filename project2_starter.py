@@ -236,26 +236,26 @@ def avg_location_rating_by_room_type(data) -> dict:
     Returns:
         dict: {room_type: average_location_rating}
     """
-    sums = {}                                    # creates a regular dictionary to store the total sum of location ratings for each room type
-    counts = {}                                  # creates a regular dictionary to store the count of ratings for each room type
+    sums = {}                                    # creates a dictionary to store the total sum of location ratings for each room type
+    counts = {}                                  # creates a dictionary to store the count of ratings for each room type
     
     for row in data:                             # iterates through each tuple in the input data list, which contains the listing info
         room_type = row[5]                       # retrieves the room type from the current tuple (index 5) and stores it in the variable room_type
         location_rating = row[6] 
         
-        if location_rating != 0.0:
+        if location_rating != 0.0:               # checks if the location rating is not equal to 0.0, which indicates that a valid rating was found in the HTML and should be included in the average calculation
             if room_type not in sums:
-                sums[room_type] = 0.0
-                counts[room_type] = 0
-            sums[room_type] += location_rating
-            counts[room_type] += 1
+                sums[room_type] = 0.0            # initializes the sum for this room type to 0.0 in the sums dictionary if it does not already exist
+                counts[room_type] = 0            # initializes the count for this room type to 0 in the counts dictionary if it does not already exist
+            sums[room_type] += location_rating   # adds the current location rating to the total sum for this room type in the sums dictionary
+            counts[room_type] += 1               # increments the count of ratings for this room type in the counts dictionary by 1
     
-    averages = {}
-    for room_type in sums:
-        if counts[room_type] > 0:
-            averages[room_type] = sums[room_type] / counts[room_type]
+    averages = {}                                # creates a dictionary to store the average location rating for each room type
+    for room_type in sums:                       # iterates through each room type in the sums dictionary, which contains the total sums of location ratings for each room type
+        if counts[room_type] > 0:                # checks if the count of ratings for this room type is greater than 0 to avoid division by zero when calculating the average
+            averages[room_type] = sums[room_type] / counts[room_type]       # calculates the average location rating for this room type by dividing the total sum of ratings by the count of ratings, and stores it in the averages dictionary with the room type as the key
     
-    return averages
+    return averages                              # returns the dictionary containing the average location rating for each room type, where the keys are the room types and the values are the average ratings
 
 def validate_policy_numbers(data) -> list[str]:
     """
