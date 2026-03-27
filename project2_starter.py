@@ -89,7 +89,31 @@ def get_listing_details(listing_id) -> dict:
     # ==============================
     # YOUR CODE STARTS HERE
     # ==============================
-    pass
+    html_file = f'html_files/listing_{listing_id}.html'  
+    with open(html_file, "r", encoding="utf-8-sig") as f:
+        soup = BeautifulSoup(f, "html.parser")
+        
+    policy_number = None
+
+    policy_elm = soup.find(string=re.compile("Policy number"))
+    if policy_elm:
+        policy_text = policy_elm.get_text(strip=True)
+        if "STR-" in policy_text:
+            policy_number = policy_text.split("STR-")[1].split()[0]
+            policy_number = "STR-" + policy_number
+        elif "Pending" in policy_text:
+            policy_number = "Pending"
+        elif "Exempt" in policy_text: 
+            policy_number = "Exempt"
+    if policy_number is None:
+        policy_number = "Exempt"
+
+    if soup.find(string=re.compile("Superhost")):
+        host_type = "Superhost"
+    else:
+        host_type = "regular"
+    
+    host_name = None
     # ==============================
     # YOUR CODE ENDS HERE
     # ==============================
