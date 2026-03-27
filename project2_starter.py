@@ -25,7 +25,6 @@ If you are getting "encoding errors" while trying to open, read, or write from a
     encoding="utf-8-sig"
 """
 
-
 def load_listing_results(html_path) -> list[tuple]:
     """
     Load file data from html_path and parse through it to find listing titles and listing ids.
@@ -64,7 +63,6 @@ def load_listing_results(html_path) -> list[tuple]:
             listings.append((title_text, listing_id))                   # it appends a tuple containing the listing title and listing id to the listings list
 
     return listings                                                     # returns the list of tuples containing listing titles and listing ids
-
 
 def get_listing_details(listing_id) -> dict:
     """
@@ -292,15 +290,19 @@ def google_scholar_searcher(query):
     Returns:
         List of titles on the first page (list)
     """
-    # TODO: Implement checkout logic following the instructions
-    # ==============================
-    # YOUR CODE STARTS HERE
-    # ==============================
-    pass
-    # ==============================
-    # YOUR CODE ENDS HERE
-    # ==============================
-
+    headers = {                                              # sets a custom User-Agent header to mimic a web browser and avoid potential blocking by Google Scholar when making the HTTP request, which is important for successfully retrieving the search results page without being blocked or receiving an error response due to automated scraping
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36' # this User-Agent string represents a common web browser (Google Chrome) on a Windows operating system, which helps to make the HTTP request appear as if it is coming from a regular user browsing the web, rather than an automated script, which can help to avoid being blocked by Google Scholar's anti-scraping measures
+    }
+    response = requests.get("https://scholar.google.com/scholar", params={'q': query}, headers=headers)                                     # makes an HTTP GET request to the Google Scholar search URL with the provided query as a parameter, and includes the custom headers to mimic a web browser
+    soup = BeautifulSoup(response.text, 'html.parser')       # makes an HTTP GET request to the Google Scholar search URL with the provided query as a parameter, and includes the custom headers to mimic a web browser; then it creates a BeautifulSoup object to parse the HTML content of the response and extract the DOM structure for further analysis
+    titles = []                                              # initializes an empty list called titles, which will be used to store the titles of the search results extracted from the Google Scholar search results page
+    for h3 in soup.find_all('h3', class_='gs_rt'):           # iterates through all <h3> elements in the parsed HTML that have the class "gs_rt", which are the elements that contain the titles of the search results on the Google Scholar page
+        a = h3.find('a')                                     # for each <h3> element found, it looks for an <a> tag within it, which typically contains the clickable title of the search result; if an <a> tag is found, it extracts the text content of that <a> tag as the title; if no <a> tag is found, it falls back to extracting the text content of the <h3> element itself as the title, and appends the extracted title to the titles list
+        if a:                                                # checks if an <a> tag was found within the <h3> element, which indicates that the title is contained within the <a> tag and should be extracted from there; if an <a> tag is found, it extracts the text content of that <a> tag and appends it to the titles list
+            titles.append(a.text)                            # if an <a> tag is found within the <h3> element, it extracts the text content of that <a> tag, which is the title of the search result, and appends it to the titles list
+        else:                                                # if no <a> tag is found within the <h3> element, it means that the title is not contained within an <a> tag and should be extracted directly from the <h3> element itself; in this case, it extracts the text content of the <h3> element and appends it to the titles list
+            titles.append(h3.text.strip())                   # if no <a> tag is found within the <h3> element, it extracts the text content of the <h3> element, removes any leading or trailing whitespace using strip(), and appends the cleaned title to the titles list
+    return titles                                            # returns the list of titles extracted from the Google Scholar search results page
 
 class TestCases(unittest.TestCase):
     def setUp(self):
