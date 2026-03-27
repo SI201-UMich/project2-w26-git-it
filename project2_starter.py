@@ -367,6 +367,12 @@ class TestCases(unittest.TestCase):
         # TODO: Check that the list contains exactly "16204265" for this dataset.
         pass
 
+    def test_google_scholar_searcher(self):
+        query = "machine learning"                   # defines a search query string to be used for testing the google_scholar_searcher function, which will be passed as an argument to the function to perform a search on Google Scholar
+        titles = google_scholar_searcher(query)      # retrieves the titles of the search results
+        self.assertIsInstance(titles, list)          # checks if titles is a list
+        if titles:                                   # if there are results for titles
+            self.assertIsInstance(titles[0], str)    # checks that the first item is a string
 
 def main():
     detailed_data = create_listing_database(os.path.join("html_files", "search_results.html"))
