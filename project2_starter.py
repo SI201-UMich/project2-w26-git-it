@@ -106,14 +106,23 @@ def create_listing_database(html_path) -> list[tuple]:
         list[tuple]: A list of tuples. Each tuple contains:
         (listing_title, listing_id, policy_number, host_type, host_name, room_type, location_rating)
     """
-    # TODO: Implement checkout logic following the instructions
-    # ==============================
-    # YOUR CODE STARTS HERE
-    # ==============================
-    pass
-    # ==============================
-    # YOUR CODE ENDS HERE
-    # ==============================
+    database = []                                                   # creates an empty list called database, which will be used to store the tuples of listing info that are gathered from the HTML file and the individual listing detail files
+    listings = load_listing_results(html_path)                      # calls the load_listing_results function with the provided html_path to get a list of tuples containing listing titles and listing ids, which is stored in the variable listings
+
+    for listing_title, listing_id in listings:                      # iterates through each tuple of listing title and listing id in the listings list
+        details = get_listing_details(listing_id)                   # calls the get_listing_details function with the current listing_id to get a dictionary containing the details of the listing, which is stored in the variable details
+        listing_info = details.get(listing_id, {})                  # retrieves the dictionary of listing details for the current listing_id from the details dictionary, using an empty dictionary as a default value if the listing_id is not found, and stores it in the variable listing_info
+
+        policy_number = listing_info.get("policy_number", "")       # retrieves the policy number from the listing_info dictionary, using an empty string as a default value if the key is not found, and stores it in the variable policy_number
+        host_type = listing_info.get("host_type", "")               # retrieves the host type from the listing_info dictionary, using an empty string as a default value if the key is not found, and stores it in the variable host_type
+        host_name = listing_info.get("host_name", "")               # retrieves the host name from the listing_info dictionary, using an empty string as a default value if the key is not found, and stores it in the variable host_name
+        room_type = listing_info.get("room_type", "")               # retrieves the room type from the listing_info dictionary, using an empty string as a default value if the key is not found, and stores it in the variable room_type
+        location_rating = listing_info.get("location_rating", 0.0)  # retrieves the location rating from the listing_info dictionary, using 0.0 as a default value if the key is not found, and stores it in the variable location_rating
+
+        database.append((listing_title, listing_id, policy_number, host_type, host_name, room_type, location_rating))  # creates a tuple containing the listing title, listing id, policy number, host type, host name, room type, and location rating for the current listing and appends it to the database list
+
+    return database                                                 # returns the list of tuples containing the listing information for all listings in the search results
+
 
 
 def output_csv(data, filename) -> None:
