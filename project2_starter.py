@@ -272,11 +272,20 @@ def validate_policy_numbers(data) -> list[str]:
     # ==============================
     # YOUR CODE STARTS HERE
     # ==============================
-    pass
-    # ==============================
+    invalid_listings = [] 
+    pattern1 = re.compile(r"STR-\d{4}-\d{4}")  
+    pattern2 = re.compile(r"STR-\d{4}")         
+
+    for row in data: 
+        listing_id = row[1]
+        policy_number = row[2]
+        if policy_number in ("Pending", "Exempt"): 
+            continue
+        if not (pattern1.match(policy_number) or pattern2.match(policy_number)):
+            invalid_listings.append(listing_id) 
+    return invalid_listings 
     # YOUR CODE ENDS HERE
     # ==============================
-
 
 # EXTRA CREDIT
 def google_scholar_searcher(query):
