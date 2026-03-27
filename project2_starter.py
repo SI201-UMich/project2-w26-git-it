@@ -302,15 +302,13 @@ class TestCases(unittest.TestCase):
         self.assertEqual(self.listings[0], ("Loft in Mission District", "1944564"))     # Check that the first (title, id) tuple is ("Loft in Mission District", "1944564")
 
     def test_get_listing_details(self):
-        html_list = ["467507", "1550913", "1944564", "4614763", "6092596"]
+        details_467507 = get_listing_details("467507")["467507"]                            # checks that the details for listing id "467507" match the expected values for policy number, host type, room type, and location rating    
+        self.assertEqual(details_467507.get("policy_number"), "STR-0005349")                # checks that the policy number for listing id "467507" is "STR-0005349" 
 
-        # TODO: Call get_listing_details() on each listing id above and save results in a list.
-
-        # TODO: Spot-check a few known values by opening the corresponding listing_<id>.html files.
-        # 1) Check that listing 467507 has the correct policy number "STR-0005349".
-        # 2) Check that listing 1944564 has the correct host type "Superhost" and room type "Entire Room".
-        # 3) Check that listing 1944564 has the correct location rating 4.9.
-        pass
+        details_1944564 = get_listing_details("1944564")["1944564"]                         # checks that the details for listing id "1944564" match the expected values for policy number, host type, room type, and location rating
+        self.assertEqual(details_1944564.get("host_type"), "Superhost")                     # checks that the host type for listing id "1944564" is "Superhost"
+        self.assertEqual(details_1944564.get("room_type"), "Entire Room")                   # checks that the room type for listing id "1944564" is "Entire Room"
+        self.assertAlmostEqual(details_1944564.get("location_rating", 0.0), 4.9, places=1)  # checks that the location rating for listing id "1944564" is approximately 4.9, allowing for a small margin of error (up to 1 decimal place) due to potential variations in the HTML content or parsing process
 
     def test_create_listing_database(self):
         for row in self.detailed_data:
