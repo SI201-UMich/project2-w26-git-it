@@ -38,21 +38,21 @@ def load_listing_results(html_path) -> list[tuple]:
     """
     listings = []
 
-    with open(html_path, "r", encoding="utf-8-sig") as f:
-        soup = BeautifulSoup(f, "html.parser")
+    with open(html_path, "r", encoding="utf-8-sig") as f:               # opens and reads the HTML file 
+        soup = BeautifulSoup(f, "html.parser")                          # creates a BeautifulSoup object to parse the HTML content and extract the DOM structure
 
-    title_nodes = soup.select('[data-testid="listing-card-title"]')
+    title_node = soup.select('[data-testid="listing-card-title"]')      # uses soup.select to find all elements with that attribute, which are the title elements for each listing on the search results page 
 
-    for node in title_nodes:
-        title_text = node.get_text(strip=True)
+    for node in title_node:                                             # iterates through each title element found in the previous step
+        title_text = node.get_text(strip=True)                          # extracts the text content of the title element, which is the listing title, and removes any leading or trailing whitespace using strip=True
 
-        listing_id = None
+        listing_id = None 
         element_id = node.get("id", "")
         if element_id.startswith("title_"):
             listing_id = element_id.split("title_", 1)[1]
 
         if not listing_id:
-            parent = node
+            parent = node 
             while parent is not None:
                 if parent.name == "a" and "/rooms/" in parent.get("href", ""):
                     href = parent.get("href", "")
