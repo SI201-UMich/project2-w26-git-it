@@ -261,24 +261,18 @@ def validate_policy_numbers(data) -> list[str]:
     Returns:
         list[str]: A list of listing_id values whose policy numbers do NOT match the valid format
     """
-    # TODO: Implement checkout logic following the instructions
-    # ==============================
-    # YOUR CODE STARTS HERE
-    # ==============================
-    invalid_listings = [] 
-    pattern1 = re.compile(r"STR-\d{4}-\d{4}")  
-    pattern2 = re.compile(r"STR-\d{4}")         
+    invalid_listings = []                            # initialize empty list to store listing IDs with invalid policy numbers
+    pattern1 = re.compile(r"STR-\d{4}-\d{4}")        # pattern for valid format: STR-XXXX-XXXX (e.g., STR-1234-5678)
+    pattern2 = re.compile(r"STR-\d{4}")              # pattern for valid format: STR-XXXX (e.g., STR-1234)
 
-    for row in data: 
-        listing_id = row[1]
-        policy_number = row[2]
-        if policy_number in ("Pending", "Exempt"): 
-            continue
-        if not (pattern1.match(policy_number) or pattern2.match(policy_number)):
-            invalid_listings.append(listing_id) 
-    return invalid_listings 
-    # YOUR CODE ENDS HERE
-    # ==============================
+    for row in data:                                 # loop through each row (tuple) in the data list
+        listing_id = row[1]                          # extract listing ID from index 1 of the tuple
+        policy_number = row[2]                       # extract policy number from index 2 of the tuple
+        if policy_number in ("Pending", "Exempt"):   # skip validation if policy is pending or exempt
+            continue                                 # move to next iteration without checking format
+        if not (pattern1.fullmatch(policy_number) or pattern2.fullmatch(policy_number)):  # check if policy doesn't match either valid format
+            invalid_listings.append(listing_id)      # if invalid, add listing ID to the invalid list
+    return invalid_listings                          # return list of listing IDs with invalid policy numbers 
 
 # EXTRA CREDIT
 def google_scholar_searcher(query):
@@ -363,9 +357,8 @@ class TestCases(unittest.TestCase):
         self.assertAlmostEqual(averages["Private Room"], 4.9)                     # checks that the average location rating for "Private Room" in the averages dictionary is 4.9, which is the expected value based on the data in the detailed_data list
 
     def test_validate_policy_numbers(self):
-        # TODO: Call validate_policy_numbers() on detailed_data and save the result into a variable invalid_listings.
-        # TODO: Check that the list contains exactly "16204265" for this dataset.
-        pass
+        invalid_listings = validate_policy_numbers(self.detailed_data)      # calls validate_policy_numbers() on detailed_data and save result
+        self.assertEqual(invalid_listings, ["16204265"])                    # checks that the list contains exactly "16204265"
 
     def test_google_scholar_searcher(self):
         query = "machine learning"                   # defines a search query string to be used for testing the google_scholar_searcher function, which will be passed as an argument to the function to perform a search on Google Scholar
