@@ -36,7 +36,7 @@ def load_listing_results(html_path) -> list[tuple]:
     Returns:
         list[tuple]: A list of tuples containing (listing_title, listing_id)
     """
-    listings = []
+    listings = []                                                       # initializes an empty list called listings, which will be used to store the tuples of listing titles and listing ids that are extracted from the HTML file
 
     with open(html_path, "r", encoding="utf-8-sig") as f:               # opens and reads the HTML file 
         soup = BeautifulSoup(f, "html.parser")                          # creates a BeautifulSoup object to parse the HTML content and extract the DOM structure
@@ -46,24 +46,24 @@ def load_listing_results(html_path) -> list[tuple]:
     for node in title_node:                                             # iterates through each title element found in the previous step
         title_text = node.get_text(strip=True)                          # extracts the text content of the title element, which is the listing title, and removes any leading or trailing whitespace using strip=True
 
-        listing_id = None 
-        element_id = node.get("id", "")
-        if element_id.startswith("title_"):
-            listing_id = element_id.split("title_", 1)[1]
+        listing_id = None                                               # initializes a variable listing_id to None, which will be used to store the listing id once it is found
+        element_id = node.get("id", "")                                 # retrieves the id attribute of the title element, which may contain the listing id in the format "title_<listing_id>"  
+        if element_id.startswith("title_"):                             # checks if the id attribute starts with "title_", which indicates that it contains the listing id
+            listing_id = element_id.split("title_", 1)[1]               # if the id attribute is in the correct format, it splits the string on "title_" and takes the second part (the listing id) and assigns it to the variable listing_id
 
-        if not listing_id:
-            parent = node 
-            while parent is not None:
-                if parent.name == "a" and "/rooms/" in parent.get("href", ""):
-                    href = parent.get("href", "")
-                    listing_id = href.split("/rooms/", 1)[1].split("?", 1)[0]
-                    break
-                parent = parent.parent
+        if not listing_id:                                              # if the listing_id was not found in the id attribute of the title element...
+            parent = node                                               # ...it initializes a variable parent to the current title element, which will be used to traverse up the DOM tree to find the listing id in the href attribute of a parent <a> tag
+            while parent is not None:                                   # continues to traverse up the DOM tree until it reaches the root (when parent becomes None)
+                if parent.name == "a" and "/rooms/" in parent.get("href", ""):      # checks if the current parent element is an <a> tag and if its href attribute contains "/rooms/", which indicates that it contains the listing id in the URL 
+                    href = parent.get("href", "")                                   # retrieves the href attribute of the <a> tag, which should contain the URL with the listing id
+                    listing_id = href.split("/rooms/", 1)[1].split("?", 1)[0]       # if the href attribute is in the correct format, it splits the string on "/rooms/" and takes the second part, then further splits it on "?" to remove any query parameters, and takes the first part as the listing id, which is assigned to the variable listing_id
+                    break                                               # breaks out of the loop once the listing id is found
+                parent = parent.parent                                  # if the listing id is not found in the current parent element, it moves up to the next parent element and continues the search
 
-        if listing_id:
-            listings.append((title_text, listing_id))
+        if listing_id:                                                  # if a listing id was successfully found through either method
+            listings.append((title_text, listing_id))                   # it appends a tuple containing the listing title and listing id to the listings list
 
-    return listings
+    return listings                                                     # returns the list of tuples containing listing titles and listing ids
 
 
 def get_listing_details(listing_id) -> dict:
