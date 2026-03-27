@@ -114,7 +114,7 @@ def get_listing_details(listing_id) -> dict:
         host_type = "regular"
     
     host_name = None
-    host_elm = soup.find(string=re.gete.compile("Hosted by|Co-hosted by"))
+    host_elm = soup.find(string=re.compile(r"Hosted by|Co-hosted by"))
     if host_elm:
         host_name = host_elm.get_text(strip=True)
         host_name = re.sub(r"Hosted by\s*|Co-hosted by\s*", "", host_name)
