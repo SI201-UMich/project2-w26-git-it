@@ -361,9 +361,9 @@ class TestCases(unittest.TestCase):
         os.remove(out_path)                                                         # removes the created CSV file after the test is complete to clean up the directory
 
     def test_avg_location_rating_by_room_type(self):
-        # TODO: Call avg_location_rating_by_room_type() and save the output.
-        # TODO: Check that the average for "Private Room" is 4.9.
-        pass
+
+        averages = avg_location_rating_by_room_type(self.detailed_data)     # calls the avg_location_rating_by_room_type function with the detailed_data list to calculate the average location rating for each room type, and stores the result in the variable averages
+        self.assertEqual(averages["Private Room"], 4.9)                     # checks that the average location rating for "Private Room" in the averages dictionary is 4.9, which is the expected value based on the data in the detailed_data list
 
     def test_validate_policy_numbers(self):
         # TODO: Call validate_policy_numbers() on detailed_data and save the result into a variable invalid_listings.
