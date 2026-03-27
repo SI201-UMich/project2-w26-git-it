@@ -223,7 +223,6 @@ def output_csv(data, filename) -> None:
                 "{:.1f}".format(location_rating) if isinstance(location_rating, (int, float)) else location_rating,     # formats the location rating to one decimal place if it is a number, otherwise it leaves it as is (in case it's not a valid number), and includes it in the row being written to the CSV file
             ])
 
-
 def avg_location_rating_by_room_type(data) -> dict:
     """
     Calculate the average location_rating for each room_type.
@@ -237,15 +236,26 @@ def avg_location_rating_by_room_type(data) -> dict:
     Returns:
         dict: {room_type: average_location_rating}
     """
-    # TODO: Implement checkout logic following the instructions
-    # ==============================
-    # YOUR CODE STARTS HERE
-    # ==============================
-    pass
-    # ==============================
-    # YOUR CODE ENDS HERE
-    # ==============================
-
+    sums = {}                                    # creates a regular dictionary to store the total sum of location ratings for each room type
+    counts = {}                                  # creates a regular dictionary to store the count of ratings for each room type
+    
+    for row in data:                             # iterates through each tuple in the input data list, which contains the listing info
+        room_type = row[5]                       # retrieves the room type from the current tuple (index 5) and stores it in the variable room_type
+        location_rating = row[6] 
+        
+        if location_rating != 0.0:
+            if room_type not in sums:
+                sums[room_type] = 0.0
+                counts[room_type] = 0
+            sums[room_type] += location_rating
+            counts[room_type] += 1
+    
+    averages = {}
+    for room_type in sums:
+        if counts[room_type] > 0:
+            averages[room_type] = sums[room_type] / counts[room_type]
+    
+    return averages
 
 def validate_policy_numbers(data) -> list[str]:
     """
