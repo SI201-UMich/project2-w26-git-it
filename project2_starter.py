@@ -123,8 +123,6 @@ def create_listing_database(html_path) -> list[tuple]:
 
     return database                                                 # returns the list of tuples containing the listing information for all listings in the search results
 
-
-
 def output_csv(data, filename) -> None:
     """
     Write data to a CSV file with the provided filename.
@@ -138,14 +136,32 @@ def output_csv(data, filename) -> None:
     Returns:
         None
     """
-    # TODO: Implement checkout logic following the instructions
-    # ==============================
-    # YOUR CODE STARTS HERE
-    # ==============================
-    pass
-    # ==============================
-    # YOUR CODE ENDS HERE
-    # ==============================
+    sorted_data = sorted(data, key=lambda row: row[6], reverse=True)        # sorts the input data (list of tuples) based on the value in the 7th position of each tuple (index 6, which corresponds to location_rating) in descending order, and stores the sorted list in the variable sorted_data
+
+    headers = [                                                             # defines a list of column headers for the CSV file, which correspond to the elements in each tuple of the data list
+        "listing_title",
+        "listing_id",
+        "policy_number",
+        "host_type",
+        "host_name",
+        "room_type",
+        "location_rating",
+    ]
+
+    with open(filename, "w", encoding="utf-8-sig", newline="") as csvfile:  # opens a new CSV file with the specified filename in write mode, using UTF-8 encoding to handle any special characters, and ensures that newlines are handled correctly across different operating systems by setting newline=""
+        writer = csv.writer(csvfile)                                        # creates a CSV writer object that will be used to write data to the CSV file   
+        writer.writerow(headers)                                            # writes the list of headers as the first row in the CSV file
+        for row in sorted_data:                                             # iterates through each tuple in the sorted_data list, which contains the listing information sorted by location rating
+
+            listing_title, listing_id, policy_number, host_type, host_name, room_type, location_rating = row            # unpacks the current tuple into individual variables for easier access to each piece of listing information
+            writer.writerow([                                               # writes a new row to the CSV file for the current listing, containing the listing title, listing id, policy number, host type, host name, room type, and location rating
+                listing_id,
+                policy_number,
+                host_type,
+                host_name,
+                room_type,
+                "{:.1f}".format(location_rating) if isinstance(location_rating, (int, float)) else location_rating,     # formats the location rating to one decimal place if it is a number, otherwise it leaves it as is (in case it's not a valid number), and includes it in the row being written to the CSV file
+            ])
 
 
 def avg_location_rating_by_room_type(data) -> dict:
